@@ -15,6 +15,10 @@ public class PizzaGUIFrame extends JFrame {
     private double totalPrice = 0;
 
     // GUI components
+    private JRadioButton thinCrustButton;
+    private JRadioButton regularCrustButton;
+    private JRadioButton deepDishButton;
+
     private JButton quitButton;
     private JButton orderButton;
     private JButton clearButton;
@@ -69,6 +73,22 @@ public class PizzaGUIFrame extends JFrame {
                 "Crust"
         );
         crustPanel.setBorder(border);
+
+        ButtonGroup crustButtonGroup = new ButtonGroup();
+
+        thinCrustButton = new JRadioButton("Thin");
+        regularCrustButton = new JRadioButton("Regular");
+        deepDishButton = new JRadioButton("Deep Dish");
+
+        crustButtonGroup.add(thinCrustButton);
+        crustButtonGroup.add(regularCrustButton);
+        crustButtonGroup.add(deepDishButton);
+
+        crustPanel.add(thinCrustButton);
+        crustPanel.add(regularCrustButton);
+        crustPanel.add(deepDishButton);
+
+        regularCrustButton.setSelected(true);
 
         return crustPanel;
     }
