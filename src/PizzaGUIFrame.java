@@ -4,21 +4,32 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class PizzaGUIFrame extends JFrame {
-    // Customizations
+    // CUSTOMIZATIONS
     private String crust = "";
     private String size = "";
     private String[] toppings;
 
-    // Totals
+    // TOTALS
     private int subtotalPrice = 0;
     private double tax = subtotalPrice * .07;
     private double totalPrice = 0;
 
-    // GUI components
+    // GUI COMPONENTS
+    // Crust
     private JRadioButton thinCrustButton;
     private JRadioButton regularCrustButton;
     private JRadioButton deepDishButton;
 
+    // Size
+    private JRadioButton smallButton;
+    private JRadioButton mediumButton;
+    private JRadioButton largeButton;
+    private JRadioButton superButton;
+
+    // Toppings
+
+
+    // Options
     private JButton quitButton;
     private JButton orderButton;
     private JButton clearButton;
@@ -74,12 +85,11 @@ public class PizzaGUIFrame extends JFrame {
         );
         crustPanel.setBorder(border);
 
-        ButtonGroup crustButtonGroup = new ButtonGroup();
-
         thinCrustButton = new JRadioButton("Thin");
         regularCrustButton = new JRadioButton("Regular");
         deepDishButton = new JRadioButton("Deep Dish");
 
+        ButtonGroup crustButtonGroup = new ButtonGroup();
         crustButtonGroup.add(thinCrustButton);
         crustButtonGroup.add(regularCrustButton);
         crustButtonGroup.add(deepDishButton);
@@ -95,12 +105,31 @@ public class PizzaGUIFrame extends JFrame {
 
     private JPanel createSizePanel() {
         JPanel sizePanel = new JPanel();
+        sizePanel.setLayout(new BoxLayout(sizePanel, BoxLayout.Y_AXIS));
 
         TitledBorder border = BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
                 "Size"
         );
         sizePanel.setBorder(border);
+
+        smallButton = new JRadioButton("Small ($8)");
+        mediumButton = new JRadioButton("Medium ($12)");
+        largeButton = new JRadioButton("Large ($16)");
+        superButton = new JRadioButton("Super ($20)");
+
+        ButtonGroup sizeButtonGroup = new ButtonGroup();
+        sizeButtonGroup.add(smallButton);
+        sizeButtonGroup.add(mediumButton);
+        sizeButtonGroup.add(largeButton);
+        sizeButtonGroup.add(superButton);
+
+        mediumButton.setSelected(true);
+
+        sizePanel.add(smallButton);
+        sizePanel.add(mediumButton);
+        sizePanel.add(largeButton);
+        sizePanel.add(superButton);
 
         return sizePanel;
     }
