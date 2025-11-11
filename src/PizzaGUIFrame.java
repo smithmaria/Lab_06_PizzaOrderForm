@@ -34,10 +34,14 @@ public class PizzaGUIFrame extends JFrame {
     private JCheckBox sausageCheckBox;
     private JCheckBox olivesCheckBox;
 
+    // Order Details
+    private JTextArea orderDetailsTextArea;
+
     // Options
     private JButton quitButton;
     private JButton orderButton;
     private JButton clearButton;
+
 
     /**
      * Constructor for PizzaGUIFrame
@@ -45,7 +49,7 @@ public class PizzaGUIFrame extends JFrame {
     public PizzaGUIFrame() {
         setTitle("Pizza Order Form");
 
-        setSize(800, 700);
+        setSize(550, 600);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
         setResizable(false);
@@ -54,6 +58,7 @@ public class PizzaGUIFrame extends JFrame {
 
         createCustomizationsPanel();
         createOrderDetailsPanel();
+        createOptionsPanel();
 
         setVisible(true);
     }
@@ -182,6 +187,132 @@ public class PizzaGUIFrame extends JFrame {
         );
         orderDetailsPanel.setBorder(border);
 
+        orderDetailsTextArea = new JTextArea(30, 30);
+        orderDetailsTextArea.setEditable(false);
+        orderDetailsTextArea.setLineWrap(true);
+
+        JScrollPane orderDetailsScrollPane = new JScrollPane(orderDetailsTextArea);
+        orderDetailsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        orderDetailsPanel.add(orderDetailsScrollPane);
+
         add(orderDetailsPanel, BorderLayout.EAST);
+    }
+
+    private void generateReceipt() {
+        StringBuilder receipt = new StringBuilder();
+        receipt.append("===================================\n");
+        receipt.append("Order Details:\n");
+        receipt.append("===================================\n\n");
+
+        String selectedCrust = "";
+        if (thinCrustButton.isSelected()) {
+            selectedCrust = "Thin Crust";
+        } else if (regularCrustButton.isSelected()) {
+            selectedCrust = "Regular Crust";
+        } else if (deepDishButton.isSelected()) {
+            selectedCrust = "Deep Dish";
+        }
+        receipt.append("Crust: ").append(selectedCrust).append("\n");
+
+        String selectedSize = "";
+        int basePrice = 0;
+        if (smallButton.isSelected()) {
+            selectedSize = "Small ($8.00)";
+            basePrice = 8;
+        } else if (mediumButton.isSelected()) {
+            selectedSize = "Medium ($12.00)";
+            basePrice = 12;
+        } else if (largeButton.isSelected()) {
+            selectedSize = "Large ($16.00)";
+            basePrice = 16;
+        } else if (superButton.isSelected()) {
+            selectedSize = "Super ($20.00)";
+            basePrice = 20;
+        }
+        receipt.append("Size: ").append(selectedSize).append("\n");
+
+        String[] selectedToppings = new String[0];
+        int toppingCount = 0;
+        if (cheeseCheckBox.isSelected()) {
+            receipt.append(" - Cheese ($1.00)\n");
+            toppingCount++;
+        }
+
+        if (pepperoniCheckBox.isSelected()) {
+            receipt.append(" - Pepperoni ($1.00)\n");
+            toppingCount++;
+        }
+
+        if (onionsCheckBox.isSelected()) {
+            receipt.append(" - Onions ($1.00)\n");
+            toppingCount++;
+        }
+
+        if (mushroomsCheckBox.isSelected()) {
+            receipt.append(" - Mushrooms ($1.00)\n");
+            toppingCount++;
+        }
+        if (sausageCheckBox.isSelected()) {
+            receipt.append(" - Sausage ($1.00)\n");
+            toppingCount++;
+        }
+
+        if (olivesCheckBox.isSelected()) {
+            receipt.append(" - Olives ($1.00)\n");
+            toppingCount++;
+        }
+
+        int toppingsCost = toppingCount * 1;
+        int subtotal = basePrice + toppingsCost;
+        double tax = subtotal * .07;
+        double total = subtotal + tax;
+
+        receipt.append("\n");
+        receipt.append("Subtotal: $").append(String.format("%.2f", (double)subtotal)).append("\n");
+        receipt.append("Tax: $").append(String.format("%.2f", tax)).append("\n");
+        receipt.append("-------------------------------------------\n");
+        receipt.append("Total: $").append(String.format("%.2f", total)).append("\n");
+        receipt.append("===================================");
+
+        orderDetailsTextArea.setText(receipt.toString());
+    }
+
+    /**
+     * Create options buttons panel
+     */
+    private void createOptionsPanel() {
+        JPanel optionsPanel = new JPanel();
+
+        quitButton = new JButton("Quit");
+        orderButton = new JButton("Order");
+        clearButton = new JButton("Clear");
+
+        quitButton.addActionListener(e -> System.exit(0));
+        orderButton.addActionListener(e -> generateReceipt());
+        clearButton.addActionListener(e -> {
+            clearForm();
+        });
+
+        optionsPanel.add(quitButton);
+        optionsPanel.add(orderButton);
+        optionsPanel.add(clearButton);
+
+        add(optionsPanel, BorderLayout.SOUTH);
+    }
+
+    private void clearForm() {
+        regularCrustButton.setSelected(true);
+
+        mediumButton.setSelected(true);
+
+        cheeseCheckBox.setSelected(true);
+        pepperoniCheckBox.setSelected(false);
+        onionsCheckBox.setSelected(false);
+        mushroomsCheckBox.setSelected(false);
+        sausageCheckBox.setSelected(false);
+        olivesCheckBox.setSelected(false);
+
+        orderDetailsTextArea.setText("");
     }
 }
