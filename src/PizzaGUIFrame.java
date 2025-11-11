@@ -27,7 +27,12 @@ public class PizzaGUIFrame extends JFrame {
     private JRadioButton superButton;
 
     // Toppings
-
+    private JCheckBox cheeseCheckBox;
+    private JCheckBox pepperoniCheckBox;
+    private JCheckBox onionsCheckBox;
+    private JCheckBox mushroomsCheckBox;
+    private JCheckBox sausageCheckBox;
+    private JCheckBox olivesCheckBox;
 
     // Options
     private JButton quitButton;
@@ -78,6 +83,7 @@ public class PizzaGUIFrame extends JFrame {
      */
     private JPanel createCrustPanel() {
         JPanel crustPanel = new JPanel();
+        crustPanel.setLayout(new BoxLayout(crustPanel, BoxLayout.Y_AXIS));
 
         TitledBorder border = BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
@@ -136,12 +142,29 @@ public class PizzaGUIFrame extends JFrame {
 
     private JPanel createToppingsPanel() {
         JPanel toppingsPanel = new JPanel();
+        toppingsPanel.setLayout(new BoxLayout(toppingsPanel, BoxLayout.Y_AXIS));
 
         TitledBorder border = BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
                 "Toppings"
         );
         toppingsPanel.setBorder(border);
+
+        cheeseCheckBox = new JCheckBox("Cheese");
+        pepperoniCheckBox = new JCheckBox("Pepperoni");
+        onionsCheckBox = new JCheckBox("Onions");
+        mushroomsCheckBox = new JCheckBox("Mushrooms");
+        sausageCheckBox = new JCheckBox("Sausage");
+        olivesCheckBox = new JCheckBox("Olives");
+
+        cheeseCheckBox.setSelected(true);
+
+        toppingsPanel.add(cheeseCheckBox);
+        toppingsPanel.add(pepperoniCheckBox);
+        toppingsPanel.add(onionsCheckBox);
+        toppingsPanel.add(mushroomsCheckBox);
+        toppingsPanel.add(sausageCheckBox);
+        toppingsPanel.add(olivesCheckBox);
 
         return toppingsPanel;
     }
