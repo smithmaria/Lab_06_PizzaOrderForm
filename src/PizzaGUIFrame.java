@@ -4,16 +4,6 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class PizzaGUIFrame extends JFrame {
-    // CUSTOMIZATIONS
-    private String crust = "";
-    private String size = "";
-    private String[] toppings;
-
-    // TOTALS
-    private int subtotalPrice = 0;
-    private double tax = subtotalPrice * .07;
-    private double totalPrice = 0;
-
     // GUI COMPONENTS
     // Crust
     private JRadioButton thinCrustButton;
