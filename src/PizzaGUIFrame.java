@@ -288,8 +288,19 @@ public class PizzaGUIFrame extends JFrame {
         orderButton = new JButton("Order");
         clearButton = new JButton("Clear");
 
-        quitButton.addActionListener(e -> System.exit(0));
-        orderButton.addActionListener(e -> generateReceipt());
+        quitButton.addActionListener(e -> {
+            int response = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you want to quit?",
+                    "Confirm Exit",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (response == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        });        orderButton.addActionListener(e -> generateReceipt());
         clearButton.addActionListener(e -> {
             clearForm();
         });
